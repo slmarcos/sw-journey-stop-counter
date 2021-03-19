@@ -6,8 +6,15 @@ export class RestLoadStarships implements LoadStarships {
     private readonly loadStarshipRequest: LoadStarshipRequest
   ) { }
 
-  async load (): Promise<LoadStarships.Result> {
-    await this.loadStarshipRequest.load()
-    return null as any
+  async load (distance: LoadStarships.Params): Promise<LoadStarships.Result> {
+    const result = await this.loadStarshipRequest.load()
+    const starships = result.map((starship) => {
+      const stops = Math.floor(distance / starship.consumables / starship.mglt)
+      return {
+        name: starship.name,
+        stops
+      }
+    })
+    return starships
   }
 }
