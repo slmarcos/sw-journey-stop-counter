@@ -19,14 +19,30 @@ const makeSut = (): SutTypes => {
 describe('RestLoadStarships use case', () => {
   test('Should calls loadStarshipRequest', async () => {
     const { sut, loadStarshipRequestSpy } = makeSut()
-    await sut.load()
+    const distance = 1000000
+    await sut.load(distance)
     expect(loadStarshipRequestSpy.calls).toBe(1)
   })
 
   test('Should throws if loadStarshipRequest throws', async () => {
     const { sut, loadStarshipRequestSpy } = makeSut()
     jest.spyOn(loadStarshipRequestSpy, 'load').mockImplementationOnce(throwError)
-    const promise = sut.load()
+    const distance = 1000000
+    const promise = sut.load(distance)
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should returns an array of StarshipModel on success', async () => {
+    const { sut, loadStarshipRequestSpy } = makeSut()
+    const distance = 1000000
+    const starships = await sut.load(distance)
+    const result = loadStarshipRequestSpy.result.map((starship) => {
+      const stops = Math.floor(distance / starship.consumables / starship.mglt)
+      return {
+        name: starship.name,
+        stops
+      }
+    })
+    expect(starships).toEqual(result)
   })
 })
