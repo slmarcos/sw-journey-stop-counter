@@ -37,7 +37,12 @@ describe('RestLoadStarships use case', () => {
     const distance = 1000000
     const starships = await sut.load(distance)
     const result = loadStarshipRequestSpy.result.map((starship) => {
-      const stops = Math.floor(distance / starship.consumables / starship.mglt)
+      let stops: string | number
+      if (starship.consumables === 'unknown' || starship.mglt === 'unknown') {
+        stops = 'unknown'
+      } else {
+        stops = Math.floor(distance / (starship.consumables as number) / Number(starship.mglt))
+      }
       return {
         name: starship.name,
         stops

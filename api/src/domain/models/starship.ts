@@ -1,10 +1,10 @@
 export type StarshipModel = {
   name: string
-  stops: number
+  stops: number | string
 }
 
 export type StarshipRequestResult = {
   name: string
-  mglt: number
-  consumables: number
+  mglt: string
+  consumables: number | string
 }

@@ -3,7 +3,7 @@ import { mockStarshipRequestResult } from '@/tests/domain/mocks'
 
 export class LoadStarshipRequestSpy implements LoadStarshipRequest {
   calls = 0
-  result: LoadStarshipRequest.Result = [mockStarshipRequestResult(), mockStarshipRequestResult()]
+  result: LoadStarshipRequest.Result = mockStarshipRequestResult()
 
   async load (): Promise<LoadStarshipRequest.Result> {
     this.calls++

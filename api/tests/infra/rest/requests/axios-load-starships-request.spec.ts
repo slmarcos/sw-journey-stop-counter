@@ -1,6 +1,6 @@
 import { AxiosLoadStarshipsRequest } from '@/infra/rest/requests'
 import { SwapiEndpointHelper } from '@/infra/rest/helpers'
-import { mockStarshipsResponse } from '@/tests/infra/rest/mocks'
+import { mockStarshipsResponsePageEnd, mockStarshipsResponsePageOne } from '@/tests/infra/rest/mocks'
 
 import axios from 'axios'
 import AxiosMockAdapter from 'axios-mock-adapter'
@@ -33,21 +33,34 @@ describe('AxiosLoadStarshipsRequest', () => {
 
   test('Should returns an array of StarshipRequestResult on request success', async () => {
     const { sut } = makeSut()
-    const response = mockStarshipsResponse()
+    const responsePageOne = mockStarshipsResponsePageOne()
+    const responsePageEnd = mockStarshipsResponsePageEnd()
     axiosMock
-      .onGet(SwapiEndpointHelper.loadStarshipsEndpoint())
-      .replyOnce(200, response)
+      .onGet(SwapiEndpointHelper.loadStarshipsEndpoint(1))
+      .replyOnce(200, responsePageOne)
+      .onGet(SwapiEndpointHelper.loadStarshipsEndpoint(2))
+      .replyOnce(200, responsePageEnd)
     const starshipsResult = await sut.load()
     expect(starshipsResult).toEqual([
       {
         name: 'Millennium Falcon',
         consumables: 1440,
-        mglt: 75
+        mglt: '75'
       },
       {
         name: 'Y-wing',
         consumables: 168,
-        mglt: 80
+        mglt: '80'
+      },
+      {
+        name: 'Naboo star skiff',
+        consumables: 'unknown',
+        mglt: 'unknown'
+      },
+      {
+        name: 'Scimitar',
+        consumables: 720,
+        mglt: 'unknown'
       }
     ])
   })
