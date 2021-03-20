@@ -1,6 +1,7 @@
 {
   "eslint.workingDirectories": [
-    "./api"
+    "api"
   ],
-  "jest.rootPath": "api"
+  "jest.pathToJest": "./node_modules/.bin/jest --runInBand",
+  "jest.rootPath": "./api",
 }
