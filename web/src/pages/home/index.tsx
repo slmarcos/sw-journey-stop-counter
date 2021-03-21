@@ -55,16 +55,20 @@ const HomePage = () => {
     get(distance)
   }
 
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setDistance(Number(event.target.value))
+  }
+
   return (
     <Grid item container spacing={1} direction="row" justify="center" alignContent="center" alignItems="center" xs={12}>
       <Grid item xs={12}>
         <h1>Star Wars - Spaceship stop counter</h1>
-        <h3>Put in the field below the distance in MGTL</h3>
+        <h3>Put in the field below the distance in MGLT</h3>
       </Grid>
       <form className={classes.root} noValidate autoComplete="off" onSubmit={submitRequest}>
         <Grid item container spacing={2} direction="row" justify="center" alignContent="center" alignItems="center" xs={12}>
           <Grid item xs={2}>
-            <TextField label="Distance" type="number" fullWidth onChange={(event) => setDistance(Number(event.target.value))} />
+            <TextField label="Distance" type="number" fullWidth onChange={handleChange} />
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit">Send</Button>
