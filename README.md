@@ -1,4 +1,4 @@
-# **Star Wars - Starship stop counter**
+# **Star Wars - Journey stop counter**
 
 # **Requisitos**
   - Node 14.x
