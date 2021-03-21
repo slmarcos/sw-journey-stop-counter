@@ -39,6 +39,7 @@ const { useGet } = initUseRest('http://localhost:3011/api')
 const HomePage = () => {
   const [distance, setDistance] = React.useState(0)
   const [starships, setStarships] = React.useState<Starships[]>([])
+  const [inputError, setInputError] = React.useState(false)
 
   const [reqData, get] = useGet('/journey/starships/')
 
@@ -52,10 +53,17 @@ const HomePage = () => {
 
   const submitRequest = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    get(distance)
+    if (distance > 0) {
+      get(distance)
+    } else {
+      setInputError(true)
+    }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    if (Number(event.target.value) > 0 && inputError) {
+      setInputError(false)
+    }
     setDistance(Number(event.target.value))
   }
 
@@ -68,7 +76,7 @@ const HomePage = () => {
       <form className={classes.root} noValidate autoComplete="off" onSubmit={submitRequest}>
         <Grid item container spacing={2} direction="row" justify="center" alignContent="center" alignItems="center" xs={12}>
           <Grid item xs={2}>
-            <TextField label="Distance" type="number" fullWidth onChange={handleChange} />
+            <TextField label="Distance" type="number" fullWidth onChange={handleChange} error={inputError} />
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit">Send</Button>
