@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const { useGet } = initUseRest('http://localhost:3011/api')
+const { useGet } = initUseRest('http://localhost:3010/api')
 
 const HomePage = () => {
   const [distance, setDistance] = React.useState(0)
@@ -70,7 +70,7 @@ const HomePage = () => {
   return (
     <Grid item container spacing={1} direction="row" justify="center" alignContent="center" alignItems="center" xs={12}>
       <Grid item xs={12}>
-        <h1>Star Wars - Spaceship stop counter</h1>
+        <h1>Star Wars - Starship stop counter</h1>
         <h3>Put in the field below the distance in MGLT</h3>
       </Grid>
       <form className={classes.root} noValidate autoComplete="off" onSubmit={submitRequest}>

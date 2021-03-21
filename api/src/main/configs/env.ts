@@ -1,3 +1,3 @@
 export default {
-  port: process.env.PORT ?? 3011
+  port: process.env.API_PORT ?? 3011
 }
